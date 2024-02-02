@@ -2,7 +2,7 @@
 using SparkCore.Runtime.Injection;
 using UnityEngine;
 
-namespace SparkGames.Portfolio3D
+namespace SparkGames.Portfolio3D.Player
 {
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimation : InjectableMonoBehaviour

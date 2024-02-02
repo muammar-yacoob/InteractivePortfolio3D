@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SparkGames.Portfolio3D
+namespace SparkGames.Portfolio3D.Player
 {
     public interface IPlayerInput
     {

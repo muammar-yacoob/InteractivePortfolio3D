@@ -3,7 +3,7 @@ using SparkCore.Runtime.Injection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace SparkGames.Portfolio3D
+namespace SparkGames.Portfolio3D.Player
 {
     [ServiceProvider]
     public class PlayerInput : IPlayerInput, IDisposable
