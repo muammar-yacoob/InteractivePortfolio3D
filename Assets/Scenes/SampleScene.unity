@@ -401,6 +401,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &918619561 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1808771670803884154, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+  m_PrefabInstance: {fileID: 1582262330}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,6 +655,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1371434297 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6051710475661179930, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+  m_PrefabInstance: {fileID: 1582262330}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1582262330
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -652,9 +674,57 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1813255439}
     m_Modifications:
+    - target: {fileID: 793041006947772994, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 793041006947772994, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 948783955277071211, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: iconUI
+      value: 
+      objectReference: {fileID: 1371434297}
+    - target: {fileID: 948783955277071211, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: textUI
+      value: 
+      objectReference: {fileID: 1859961086}
+    - target: {fileID: 948783955277071211, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: titleUI
+      value: 
+      objectReference: {fileID: 918619561}
+    - target: {fileID: 948783955277071211, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: dialogueText
+      value: 
+      objectReference: {fileID: 1859961086}
+    - target: {fileID: 948783955277071211, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: dialogueTitle
+      value: 
+      objectReference: {fileID: 918619561}
     - target: {fileID: 2505732118417836160, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
       propertyPath: m_Name
       value: Dialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900875315253708131, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: m_Name
+      value: Icon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6051710475661179930, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5ed2a38be144c664e831741d89fec61a, type: 3}
+    - target: {fileID: 6051710475661179930, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6051710475661179930, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6051710475661179930, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7403390414541896158, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
       propertyPath: m_Pivot.x
@@ -686,7 +756,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7403390414541896158, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -22
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7403390414541896158, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
       propertyPath: m_SizeDelta.y
@@ -853,6 +923,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1859961086 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5870872373636243241, guid: 3ae150c58bdd25f418a5cc9310bd250f, type: 3}
+  m_PrefabInstance: {fileID: 1582262330}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &536389795350497251
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -862,13 +943,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 189497106573968205, guid: 43de40ddc8cddf94ab65d600903139b7, type: 3}
+      propertyPath: info
+      value: 
+      objectReference: {fileID: 11400000, guid: e5caff6462b529647a6c3d2e4f3f6685, type: 2}
+    - target: {fileID: 189497106573968205, guid: 43de40ddc8cddf94ab65d600903139b7, type: 3}
       propertyPath: stationDialogue
-      value: 'Welcome to Station Red!
-
-        Welcome to Station Blue!
-
-        Feel
-        free to check our <link="RED_ID">Blue Project</link>'
+      value: "Welcome to Station Red!  \\U0001F60A\nVisit our <link=\"http://www.example.com\"><style=LinkStyle>website</style></link>
+        for more information.\r"
       objectReference: {fileID: 0}
     - target: {fileID: 327176412569968619, guid: 43de40ddc8cddf94ab65d600903139b7, type: 3}
       propertyPath: m_Name
@@ -932,11 +1013,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3111371744421191826, guid: 81736d6e8d0aa3948a287c9e9a0ff0a2, type: 3}
+      propertyPath: info
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ccdd756a99d1b3429fcd5baa885dccd, type: 2}
+    - target: {fileID: 3111371744421191826, guid: 81736d6e8d0aa3948a287c9e9a0ff0a2, type: 3}
       propertyPath: stationDialogue
       value: 'Welcome to Station Blue!
 
         Feel free to check our <link="BLUE_ID">Blue
-        Project</link>'
+        Project</link>Visit our <link="http://www.example.com">website</link> for
+        more information.
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 3244482574268595252, guid: 81736d6e8d0aa3948a287c9e9a0ff0a2, type: 3}
       propertyPath: m_Name

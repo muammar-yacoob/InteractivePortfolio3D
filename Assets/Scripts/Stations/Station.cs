@@ -7,7 +7,7 @@ namespace SparkGames.Portfolio3D.Stations
     [RequireComponent(typeof(BoxCollider))]
     public class Station : InjectableMonoBehaviour
     {
-        [SerializeField] [TextArea] private string stationDialogue;
+        [SerializeField] private StationInfo info;
         protected override void Awake()
         {
             base.Awake();
@@ -18,7 +18,7 @@ namespace SparkGames.Portfolio3D.Stations
         {
             if (other.TryGetComponent(out PlayerMovement playerMovement))
             {
-                PublishEvent(new StationEntered(stationDialogue));
+                PublishEvent(new StationEntered(info.Title, info.Dialogue, info.Icon));
             }
         }
         

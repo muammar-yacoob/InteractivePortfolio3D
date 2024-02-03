@@ -5,29 +5,34 @@ using UnityEngine;
 using SparkCore.Runtime.Core;
 using SparkGames.Portfolio3D.Stations;
 using System.Threading;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace SparkGames.Portfolio3D.UI
 {
     public class DialogueBox : InjectableMonoBehaviour
     {
+        [Header("Animation Settings")]
         [SerializeField] private float moveDuration = 0.5f;
         [SerializeField] private float durationPerChar = 0.02f;
-
-        private TMP_Text dialogueText;
+        
+        [Header("UI Elements")]
+        [SerializeField] private TMP_Text titleUI;
+        [SerializeField] private TMP_Text textUI;
+        [SerializeField] private Image iconUI;
+        
         private RectTransform dialogueBox;
         private Vector2 offCanvasPosition;
         private Vector2 onCanvasPosition;
         private CancellationTokenSource textAnimationCts;
         private Vector2 position;
-        private Material mat;
+        private Material backgroundMat;
         private Color initialColor;
 
         protected override void Awake()
         {
             base.Awake();
             dialogueBox ??= GetComponent<RectTransform>();
-            dialogueText ??= GetComponentInChildren<TMP_Text>();
 
             position = dialogueBox.position;
             offCanvasPosition = new Vector2(position.x, -dialogueBox.rect.height*2);
@@ -37,8 +42,8 @@ namespace SparkGames.Portfolio3D.UI
             position = offCanvasPosition;
             dialogueBox.position = position;
             
-            mat = dialogueBox.GetComponent<Image>().material;
-            initialColor = mat.color; 
+            backgroundMat = dialogueBox.GetComponent<Image>().material;
+            initialColor = backgroundMat.color; 
         }
 
         private void OnEnable()
@@ -51,7 +56,7 @@ namespace SparkGames.Portfolio3D.UI
         {
             UnsubscribeEvent<StationEntered>(OnStationEntered);
             UnsubscribeEvent<StationExited>(OnStationExited);
-            mat.color = initialColor;
+            backgroundMat.color = initialColor;
         }
 
         private async void OnStationEntered(StationEntered stationEntered)
@@ -60,16 +65,19 @@ namespace SparkGames.Portfolio3D.UI
             textAnimationCts?.Cancel();
             textAnimationCts = new CancellationTokenSource();
 
-            if (stationEntered.Token.IsCancellationRequested || dialogueText == null) return;
+            if (stationEntered.Token.IsCancellationRequested || textUI == null) return;
+            
+            titleUI.text = stationEntered.Title;
+            backgroundMat.color = initialColor;
+            iconUI.sprite = stationEntered.Icon;
             
             // Move dialogue box into view.
-            mat.color = initialColor;
             await dialogueBox.DOMove(onCanvasPosition, moveDuration).AsyncWaitForCompletion();
             
             // Start text animation with new CancellationToken.
             try
             {
-                await dialogueText.DOText(stationEntered.Dialogue, durationPerChar, true, textAnimationCts.Token);
+                await textUI.DOText(stationEntered.Dialogue, durationPerChar, true, textAnimationCts.Token);
             }
             catch (OperationCanceledException)
             {
@@ -79,17 +87,17 @@ namespace SparkGames.Portfolio3D.UI
 
         private async void OnStationExited(StationExited stationExited)
         {
-            if (textAnimationCts == null || dialogueText == null) return;
+            if (textAnimationCts == null || textUI == null) return;
             // Immediately cancel any ongoing text animation to prevent it from completing.
             textAnimationCts?.Cancel();
 
             // Move dialogue box out of view.
             var sequence = DOTween.Sequence();
             sequence.Append(dialogueBox.DOMove(offCanvasPosition, moveDuration));
-            sequence.Join(mat.DOFade(0, moveDuration).SetEase(Ease.OutBack));
+            sequence.Join(backgroundMat.DOFade(0, moveDuration).SetEase(Ease.OutBack));
             
             await sequence.AsyncWaitForCompletion();
-            dialogueText.text = string.Empty;
+            textUI.text = string.Empty;
             
         }
     }
