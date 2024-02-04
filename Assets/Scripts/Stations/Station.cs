@@ -18,7 +18,7 @@ namespace SparkGames.Portfolio3D.Stations
         {
             if (other.TryGetComponent(out PlayerMovement playerMovement))
             {
-                PublishEvent(new StationEntered(info.Title, info.Dialogue, info.Icon));
+                PublishEvent(new StationEntered(info));
             }
         }
         

@@ -9,11 +9,13 @@ namespace SparkGames.Portfolio3D.Stations
         [SerializeField] private string title;
         [SerializeField] [TextArea] private string dialogue;
         [SerializeField] private Sprite icon;
-        [SerializeField] private AudioClip audio;
+        [FormerlySerializedAs("audio")] [SerializeField] private AudioClip entrySfx;
         [SerializeField] private string url = "https://github.com/muammar-yacoob/InteractivePortfolio3D";
         
         public string Title => title;
         public string Dialogue => dialogue;
         public Sprite Icon => icon;
+        public AudioClip EntrySfx => entrySfx;
+        public string URL => url;
     }
 }

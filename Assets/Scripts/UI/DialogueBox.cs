@@ -6,16 +6,17 @@ using SparkCore.Runtime.Core;
 using SparkGames.Portfolio3D.Stations;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace SparkGames.Portfolio3D.UI
 {
+    [RequireComponent(typeof(AudioSource))]
     public class DialogueBox : InjectableMonoBehaviour
     {
-        [Header("Animation Settings")]
+        [Header("FX Settings")]
         [SerializeField] private float moveDuration = 0.5f;
         [SerializeField] private float durationPerChar = 0.02f;
+        [SerializeField] private AudioSource audioSource;
         
         [Header("UI Elements")]
         [SerializeField] private TMP_Text titleUI;
@@ -35,6 +36,7 @@ namespace SparkGames.Portfolio3D.UI
         {
             base.Awake();
             dialogueBox ??= GetComponent<RectTransform>();
+            audioSource ??= GetComponent<AudioSource>();
 
             position = dialogueBox.position;
             offCanvasPosition = new Vector2(position.x, -dialogueBox.rect.height*2);
@@ -68,11 +70,19 @@ namespace SparkGames.Portfolio3D.UI
             textAnimationCts?.Cancel();
             textAnimationCts = new CancellationTokenSource();
 
-            if (stationEntered.Token.IsCancellationRequested || textUI == null) return;
+            var token = stationEntered.Token;
+            var stationInfo = stationEntered.StationInfo;
+
+            if (token.IsCancellationRequested || textUI == null) return;
             
-            titleUI.text = stationEntered.Title;
+            titleUI.text = stationInfo.Title;
             backgroundMat.color = initialColor;
-            iconUI.sprite = stationEntered.Icon;
+            iconUI.sprite = stationInfo.Icon;
+            
+            if(audioSource != null && stationInfo.EntrySfx != null)
+            {
+                audioSource.PlayOneShot(stationInfo.EntrySfx);
+            }
             
             // Move dialogue box into view.
             await dialogueBox.DOMove(onCanvasPosition, moveDuration).AsyncWaitForCompletion();
@@ -80,8 +90,8 @@ namespace SparkGames.Portfolio3D.UI
             // Start text animation with new CancellationToken.
             try
             {
-                var doTextTask = textUI.DOText(stationEntered.Dialogue, durationPerChar, true, textAnimationCts.Token);
-                var doBeepTask = typingSfx.DOBeep(stationEntered.Dialogue.Length, durationPerChar, textAnimationCts);
+                var doTextTask = textUI.DOText(stationInfo.Dialogue, durationPerChar, true, textAnimationCts.Token);
+                var doBeepTask = typingSfx.DOBeep(stationInfo.Dialogue.Length, durationPerChar, textAnimationCts);
                 await UniTask.WhenAll(doTextTask, doBeepTask);
             }
             catch (OperationCanceledException)
