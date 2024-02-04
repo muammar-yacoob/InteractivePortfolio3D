@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 namespace SparkGames.Portfolio3D.UI
 {
+    [RequireComponent(typeof(CanvasGroup))]
     [RequireComponent(typeof(AudioSource))]
     public class DialogueBox : InjectableMonoBehaviour
     {
@@ -23,32 +24,33 @@ namespace SparkGames.Portfolio3D.UI
         [SerializeField] private TMP_Text textUI;
         [SerializeField] private Image iconUI;
         
-        private RectTransform dialogueBox;
         private Vector2 offCanvasPosition;
         private Vector2 onCanvasPosition;
         private CancellationTokenSource textAnimationCts;
-        private Vector2 position;
         private Material backgroundMat;
         private Color initialColor;
         private TypingSfx typingSfx;
+        private RectTransform dialogueBox;
+        private CanvasGroup canvasGroup;
 
         protected override void Awake()
         {
             base.Awake();
-            dialogueBox ??= GetComponent<RectTransform>();
             audioSource ??= GetComponent<AudioSource>();
+            canvasGroup = GetComponent<CanvasGroup>();
+            dialogueBox = GetComponent<RectTransform>();
 
-            position = dialogueBox.position;
-            offCanvasPosition = new Vector2(position.x, -dialogueBox.rect.height*2);
-            onCanvasPosition = position; // Current position as onCanvasPosition.
-            
-            // Initially move the dialogue box off canvas.
-            position = offCanvasPosition;
-            dialogueBox.position = position;
-            
+            Canvas canvas = GetComponentInParent<Canvas>();
+            RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+
+            onCanvasPosition = dialogueBox.anchoredPosition; // Save the initial position
+            offCanvasPosition = new Vector2(onCanvasPosition.x, -dialogueBox.rect.height);
+
+            dialogueBox.anchoredPosition = offCanvasPosition;
+
             backgroundMat = dialogueBox.GetComponent<Image>().material;
-            initialColor = backgroundMat.color; 
-            typingSfx = GetComponent<TypingSfx>()?? gameObject.AddComponent<TypingSfx>();
+            initialColor = backgroundMat.color;
+            typingSfx = GetComponent<TypingSfx>() ?? gameObject.AddComponent<TypingSfx>();
         }
 
         private void OnEnable()
@@ -84,9 +86,14 @@ namespace SparkGames.Portfolio3D.UI
                 audioSource.PlayOneShot(stationInfo.EntrySfx);
             }
             
-            // Move dialogue box into view.
-            await dialogueBox.DOMove(onCanvasPosition, moveDuration).AsyncWaitForCompletion();
-            
+            // Set initial states
+            canvasGroup.alpha = 0;
+            dialogueBox.anchoredPosition = offCanvasPosition; // Make sure it starts off-screen.
+
+            // Fade in the dialogue box along with its content
+            canvasGroup.DOFade(1, moveDuration); // Fade in
+            await dialogueBox.DOAnchorPos(onCanvasPosition, moveDuration).AsyncWaitForCompletion();
+
             // Start text animation with new CancellationToken.
             try
             {
@@ -103,16 +110,15 @@ namespace SparkGames.Portfolio3D.UI
         private async void OnStationExited(StationExited stationExited)
         {
             if (textAnimationCts == null || textUI == null) return;
-            // Immediately cancel any ongoing text animation to prevent it from completing.
             textAnimationCts?.Cancel();
 
-            // Move dialogue box out of view.
-            var sequence = DOTween.Sequence();
-            sequence.Append(dialogueBox.DOMove(offCanvasPosition, moveDuration));
-            sequence.Join(backgroundMat.DOFade(0, moveDuration).SetEase(Ease.OutBack));
-            
-            await sequence.AsyncWaitForCompletion();
+            // Move and fade out dialogue box
+            canvasGroup.DOFade(0, moveDuration); // Fade out
+            await dialogueBox.DOAnchorPos(offCanvasPosition, moveDuration).AsyncWaitForCompletion();
+
+            // Clear texts after fade out
             textUI.text = string.Empty;
+            titleUI.text = string.Empty;
         }
     }
 }
