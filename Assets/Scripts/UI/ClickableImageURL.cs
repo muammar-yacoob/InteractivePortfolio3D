@@ -25,6 +25,7 @@ namespace SparkGames.Portfolio3D.UI
         {
             if (String.IsNullOrEmpty(url)) return;
             ResetCursor();
+            PublishEvent(new StationExited());
             Application.OpenURL(url);
         }
         
