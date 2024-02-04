@@ -5,6 +5,7 @@ using UnityEngine;
 using SparkCore.Runtime.Core;
 using SparkGames.Portfolio3D.Stations;
 using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -28,6 +29,7 @@ namespace SparkGames.Portfolio3D.UI
         private Vector2 position;
         private Material backgroundMat;
         private Color initialColor;
+        private TypingSfx typingSfx;
 
         protected override void Awake()
         {
@@ -44,6 +46,7 @@ namespace SparkGames.Portfolio3D.UI
             
             backgroundMat = dialogueBox.GetComponent<Image>().material;
             initialColor = backgroundMat.color; 
+            typingSfx = GetComponent<TypingSfx>()?? gameObject.AddComponent<TypingSfx>();
         }
 
         private void OnEnable()
@@ -77,7 +80,9 @@ namespace SparkGames.Portfolio3D.UI
             // Start text animation with new CancellationToken.
             try
             {
-                await textUI.DOText(stationEntered.Dialogue, durationPerChar, true, textAnimationCts.Token);
+                var doTextTask = textUI.DOText(stationEntered.Dialogue, durationPerChar, true, textAnimationCts.Token);
+                var doBeepTask = typingSfx.DOBeep(stationEntered.Dialogue.Length, durationPerChar, textAnimationCts);
+                await UniTask.WhenAll(doTextTask, doBeepTask);
             }
             catch (OperationCanceledException)
             {
@@ -98,7 +103,6 @@ namespace SparkGames.Portfolio3D.UI
             
             await sequence.AsyncWaitForCompletion();
             textUI.text = string.Empty;
-            
         }
     }
 }

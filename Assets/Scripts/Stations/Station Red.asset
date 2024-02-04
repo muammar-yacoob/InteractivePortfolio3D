@@ -15,3 +15,5 @@ MonoBehaviour:
   title: Artwork
   dialogue: Simple artwork/dev art!
   icon: {fileID: 21300000, guid: f708b3b927907e843bbe5ecff4946286, type: 3}
+  audio: {fileID: 8300000, guid: 50cda538a830ef048af1f7a79a4fd90f, type: 3}
+  url: https://assetstore.unity.com/publishers/46749
