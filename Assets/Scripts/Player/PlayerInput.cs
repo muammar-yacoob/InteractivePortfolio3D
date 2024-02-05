@@ -13,6 +13,7 @@ namespace SparkGames.Portfolio3D.Player
         public Vector2 Movement => movement;
 
         public event Action<bool> CursorVisibilityChanged;
+        public event Action Kicked;
         public bool CursorVisibility { get; private set; } = true;
 
         public PlayerInput()
@@ -22,7 +23,10 @@ namespace SparkGames.Portfolio3D.Player
             playerControls.GamePlay.Movement.performed += MovementPerformed;
             playerControls.GamePlay.Movement.canceled += MovementCancelled;
             playerControls.GamePlay.CursorVisibility.performed += ToggleCursorVisibility;
+            playerControls.GamePlay.Kick.performed += KickedPerformed;
         }
+        
+        private void KickedPerformed(InputAction.CallbackContext ctx) => Kicked?.Invoke();
         private void ToggleCursorVisibility(InputAction.CallbackContext ctx) => CursorVisibilityChanged?.Invoke(CursorVisibility = !CursorVisibility);
         private void MovementPerformed(InputAction.CallbackContext ctx) => movement = ctx.ReadValue<Vector2>();
         private void MovementCancelled(InputAction.CallbackContext ctx) => movement = Vector2.zero;
@@ -33,6 +37,7 @@ namespace SparkGames.Portfolio3D.Player
             playerControls.GamePlay.Movement.performed -= MovementPerformed;
             playerControls.GamePlay.Movement.canceled -= MovementCancelled;
             playerControls.GamePlay.CursorVisibility.performed -= ToggleCursorVisibility;
+            playerControls.GamePlay.Kick.performed -= KickedPerformed;
             playerControls?.Dispose();
         }
     }

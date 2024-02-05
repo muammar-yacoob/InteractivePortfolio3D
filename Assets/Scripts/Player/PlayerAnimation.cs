@@ -1,4 +1,5 @@
-﻿using SparkCore.Runtime.Core;
+﻿using Cysharp.Threading.Tasks;
+using SparkCore.Runtime.Core;
 using SparkCore.Runtime.Injection;
 using UnityEngine;
 
@@ -12,8 +13,11 @@ namespace SparkGames.Portfolio3D.Player
         private int currentAnimationStateHash;
         private int idleStateHash;
         private int walkingStateHash;
+        private int kickStateHash;
         private const float speedThreshold = 0.1f;
         private const float crossFadeDuration = 0.03f;
+
+        private bool isKicking = false;
 
         protected override void Awake()
         {
@@ -22,11 +26,21 @@ namespace SparkGames.Portfolio3D.Player
 
             idleStateHash = Animator.StringToHash("Idle");
             walkingStateHash = Animator.StringToHash("Walking");
+            kickStateHash = Animator.StringToHash("Kick");
             currentAnimationStateHash = idleStateHash;
+
+            playerInput.Kicked += OnKick; 
+        }
+
+        private void OnDestroy()
+        {
+            playerInput.Kicked -= OnKick;
         }
 
         private void Update()
         {
+            if (isKicking) return;
+
             var speed = playerInput.Movement.magnitude;
             var newAnimationStateHash = speed > speedThreshold ? walkingStateHash : idleStateHash;
 
@@ -35,6 +49,20 @@ namespace SparkGames.Portfolio3D.Player
                 animator.CrossFade(newAnimationStateHash, crossFadeDuration);
                 currentAnimationStateHash = newAnimationStateHash;
             }
+        }
+
+        private void OnKick()
+        {
+            animator.CrossFade(kickStateHash, crossFadeDuration);
+            isKicking = true; 
+            currentAnimationStateHash = kickStateHash; 
+            ResetKickState().Forget();
+        }
+
+        private async UniTask ResetKickState()
+        {
+            await UniTask.Delay(500);
+            isKicking = false;
         }
     }
 }
