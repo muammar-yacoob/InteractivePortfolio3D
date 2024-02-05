@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "CursorVisibility",
+                    "type": "Button",
+                    "id": "0ce2a1cd-e142-4b42-a5d9-4a732976c921",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -70,6 +79,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b146cc93-1a71-471f-9d55-e7b337ba5ee6",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CursorVisibility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
