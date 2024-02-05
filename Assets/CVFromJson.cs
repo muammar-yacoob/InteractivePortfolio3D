@@ -1,20 +1,22 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SparkGames.Portfolio3D
 {
     public class CVFromJson : MonoBehaviour
     {
-        public string jsonFileName = "CV.json"; 
+        [SerializeField] private Transform jobTitlePoint;
+        [FormerlySerializedAs("namePosition")] [SerializeField] private Transform namePoint;
+        
+        string jsonFileName = "CV.json"; 
 
-        void Start()
+        private void OnEnable()
         {
-            // Load and parse the JSON data
             TextData textData = LoadTextDataFromJson(jsonFileName);
 
-            // Generate 3D text for JobTitle and Name
-            Generate3DText(textData.JobTitle, new Vector3(0, 1, 0)); // Example position for JobTitle
-            Generate3DText(textData.Name, new Vector3(0, 0, 0)); // Example position for Name
+            Generate3DText(textData.JobTitle, jobTitlePoint);
+            Generate3DText(textData.Name, namePoint); 
         }
 
         TextData LoadTextDataFromJson(string fileName)
@@ -32,7 +34,7 @@ namespace SparkGames.Portfolio3D
             }
         }
 
-        void Generate3DText(string text, Vector3 startPosition)
+        void Generate3DText(string text, Transform startPoint)
         {
             for (int i = 0; i < text.Length; i++)
             {
@@ -40,11 +42,8 @@ namespace SparkGames.Portfolio3D
                 GameObject letterPrefab = Resources.Load<GameObject>($"Letters/{letter}");
                 if (letterPrefab != null)
                 {
-                    // Adjust the rotation here
-                    Quaternion rotation = Quaternion.Euler(0, 180, 0); // Flip the letter by rotating 180 degrees around the Y-axis
-
-                    // Instantiate the letter prefab at the specified position with adjusted rotation
-                    Instantiate(letterPrefab, startPosition + new Vector3(i * 0.5f, 0, 0), rotation, transform);
+                    Quaternion rotationCorrection = Quaternion.Euler(0, 180, 0);
+                    Instantiate(letterPrefab, startPoint.position + new Vector3(i * 0.5f, 0, 0), startPoint.rotation * rotationCorrection, transform);
                 }
                 else
                 {
