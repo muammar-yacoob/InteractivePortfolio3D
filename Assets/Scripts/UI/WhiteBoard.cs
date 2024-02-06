@@ -9,6 +9,10 @@ namespace SparkGames.Portfolio3D.UI
     {
         [SerializeField] TMP_Text workExperienceUI;
         [Inject] private readonly ICVLoader cvLoader;
-        private void Start() => workExperienceUI.text = cvLoader.CVData.WorkExperience;
+        private async void Start()
+        {
+            var cvData = await  cvLoader.DataLoaded;
+            workExperienceUI.text = cvData.WorkExperience;
+        }
     }
 }
