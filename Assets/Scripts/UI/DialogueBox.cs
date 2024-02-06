@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -32,6 +33,10 @@ namespace SparkGames.Portfolio3D.UI
         private TypingSfx typingSfx;
         private RectTransform dialogueBox;
         private CanvasGroup canvasGroup;
+        
+        private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
+        private Dictionary<string, AudioClip> audioClipCache = new Dictionary<string, AudioClip>();
+
 
         protected override void Awake()
         {
@@ -68,23 +73,45 @@ namespace SparkGames.Portfolio3D.UI
 
         private async void OnStationEntered(StationEntered stationEntered)
         {
+            Debug.Log($"Station entered, loading icon: {stationEntered.ProjectData.Icon} and SFX: {stationEntered.ProjectData.SFX}");
             // Cancel any ongoing text animation.
             textAnimationCts?.Cancel();
             textAnimationCts = new CancellationTokenSource();
 
             var token = stationEntered.Token;
-            var stationInfo = stationEntered.StationInfo;
+            var stationInfo = stationEntered.ProjectData;
 
             if (token.IsCancellationRequested || textUI == null) return;
-            
+    
             titleUI.text = stationInfo.Title;
             backgroundMat.color = initialColor;
-            iconUI.sprite = stationInfo.Icon;
-            
-            if(audioSource != null && stationInfo.EntrySfx != null)
+
+            // Load and cache the icon sprite
+            if (!spriteCache.TryGetValue(stationInfo.Icon, out var iconSprite))
             {
-                audioSource.PlayOneShot(stationInfo.EntrySfx);
+                iconSprite = Resources.Load<Sprite>("Icons/" + stationInfo.Icon);
+                if (iconSprite != null)
+                {
+                    spriteCache[stationInfo.Icon] = iconSprite;
+                }
             }
+            iconUI.sprite = iconSprite;
+    
+            // Load and cache the audio clip
+            if (!audioClipCache.TryGetValue(stationInfo.SFX, out var audioClip))
+            {
+                audioClip = Resources.Load<AudioClip>("SFX/" + stationInfo.SFX);
+                if (audioClip != null)
+                {
+                    audioClipCache[stationInfo.SFX] = audioClip;
+                }
+            }
+
+            if(audioSource != null && audioClip != null)
+            {
+                audioSource.PlayOneShot(audioClip);
+            }
+
             
             // Set initial states
             canvasGroup.alpha = 0;
@@ -97,8 +124,8 @@ namespace SparkGames.Portfolio3D.UI
             // Start text animation with new CancellationToken.
             try
             {
-                var doTextTask = textUI.DOText(stationInfo.Dialogue, durationPerChar, true, textAnimationCts.Token);
-                var doBeepTask = typingSfx.DOBeep(stationInfo.Dialogue.Length, durationPerChar, textAnimationCts);
+                var doTextTask = textUI.DOText(stationInfo.Description, durationPerChar, true, textAnimationCts.Token);
+                var doBeepTask = typingSfx.DOBeep(stationInfo.Description.Length, durationPerChar, textAnimationCts);
                 await UniTask.WhenAll(doTextTask, doBeepTask);
             }
             catch (OperationCanceledException)

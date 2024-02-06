@@ -13,7 +13,7 @@ namespace SparkGames.Portfolio3D.UI
 
         private string url = "https://spark-games.co.uk/";
 
-        private void OnEnable() => SubscribeEvent<StationEntered>(stationInfo => url = stationInfo.StationInfo.URL);
+        private void OnEnable() => SubscribeEvent<StationEntered>(entered => url = entered.ProjectData.URL);
         private void OnDisable() => UnsubscribeEvent<StationEntered>(stationInfo => url = String.Empty);
 
         private void Start()

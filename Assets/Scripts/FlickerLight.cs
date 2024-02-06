@@ -7,7 +7,7 @@ namespace SparkGames.Portfolio3D
     {
         private Material materialInstance;
 
-        private async void Start()
+        private void Start()
         {
             materialInstance = GetComponent<Renderer>().material;
             Flicker().Forget();

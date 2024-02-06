@@ -5,12 +5,14 @@ namespace SparkGames.Portfolio3D.Stations
 {
     public class StationEntered: MonoEvent
     {
-        public readonly StationInfo StationInfo;
+        //public readonly StationInfo StationInfo;
+        public readonly Project ProjectData;
         public readonly CancellationToken Token;
 
-        public StationEntered(StationInfo stationInfo, CancellationToken token = default)
+        public StationEntered(Project projectData, CancellationToken token = default)
         {
-            StationInfo = stationInfo;
+            // StationInfo = stationInfo;
+            ProjectData = projectData;
             Token = token;
         }
     }
