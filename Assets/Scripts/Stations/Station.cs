@@ -25,7 +25,7 @@ namespace SparkGames.Portfolio3D.Stations
 
         private async UniTask GetProjectByTitle()
         {
-            var cvData = await  cvLoader.DataLoaded;
+            var cvData = await  cvLoader.GetCVDataAsync();
             var projects = cvData.Projects;
             projectData = projects.FirstOrDefault(project => project.Title == projectTitle);
         }
