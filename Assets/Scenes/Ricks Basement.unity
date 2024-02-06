@@ -843,8 +843,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438115517}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.11, y: 2.51, z: 4.3}
-  m_LocalScale: {x: 5.7222, y: 0.1582, z: 0.5}
+  m_LocalPosition: {x: 1.93, y: 2.51, z: 4.3}
+  m_LocalScale: {x: 7.895491, y: 0.1582, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1816514428}
@@ -1633,7 +1633,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1126961319}
-  - component: {fileID: 1126961318}
+  - component: {fileID: 1126961320}
   m_Layer: 0
   m_Name: 3D Text
   m_TagString: Untagged
@@ -1641,20 +1641,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1126961318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1126961317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31519d7280c60374e927578b5e3faa78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jobTitlePoint: {fileID: 494860206}
-  namePoint: {fileID: 1670673667}
 --- !u!4 &1126961319
 Transform:
   m_ObjectHideFlags: 0
@@ -1667,11 +1653,26 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 494860206}
   - {fileID: 1670673667}
+  - {fileID: 494860206}
   m_Father: {fileID: 1150651669}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1126961320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126961317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b93fba40f4f4328ac8a3c2c156d75c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jsonFileName: CV.json
+  namePoint: {fileID: 1670673667}
+  titlePoint: {fileID: 494860206}
 --- !u!1 &1150651668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1942,6 +1943,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1378042015}
+  - component: {fileID: 1378042016}
   m_Layer: 0
   m_Name: Stations
   m_TagString: Untagged
@@ -1966,6 +1968,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1378042016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378042014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31519d7280c60374e927578b5e3faa78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jsonFileName: CV.json
 --- !u!1 &1455236384
 GameObject:
   m_ObjectHideFlags: 0
