@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using Cysharp.Threading.Tasks;
 using SparkCore.Runtime.Injection;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace SparkGames.Portfolio3D
 {
@@ -14,15 +16,50 @@ namespace SparkGames.Portfolio3D
     public class CVLoader : ICVLoader, IDisposable
     {
         private readonly string jsonFileName = "CV.json";
-        private readonly CVDataModel _cvData;
+        private CVDataModel _cvData;
         public CVDataModel CVData => _cvData;
 
         public CVLoader()
         {
-            string filePath = Path.Combine(Application.streamingAssetsPath, jsonFileName);
-            _cvData = JsonFileReader.LoadTextDataFromJson(filePath);
+            // Start an asynchronous operation to load the JSON data
+            LoadJsonData().Forget(); // Using UniTask's Forget extension method to fire and forget
+        }
 
-            if (_cvData == null) Debug.LogError("TextDataModel is null");
+        private async UniTask LoadJsonData()
+        {
+            string filePath = Path.Combine(Application.streamingAssetsPath, jsonFileName);
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                // Use UnityWebRequest for WebGL
+                UnityWebRequest request = UnityWebRequest.Get(filePath);
+                await request.SendWebRequest();
+
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError("Error loading JSON: " + request.error);
+                }
+                else
+                {
+                    // Successfully loaded the JSON file
+                    string jsonData = request.downloadHandler.text;
+                    _cvData = JsonUtility.FromJson<CVDataModel>(jsonData);
+                }
+            }
+            else
+            {
+                // Directly read the file content for non-WebGL platforms
+                if (File.Exists(filePath))
+                {
+                    string jsonData = await File.ReadAllTextAsync(filePath);
+                    _cvData = JsonUtility.FromJson<CVDataModel>(jsonData);
+                }
+                else
+                {
+                    Debug.LogError("Cannot find JSON file at " + filePath);
+                }
+            }
+
+            if (_cvData == null) Debug.LogError("CVDataModel is null");
         }
 
         public void Dispose()
