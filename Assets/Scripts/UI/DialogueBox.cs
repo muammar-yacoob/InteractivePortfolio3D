@@ -73,6 +73,7 @@ namespace SparkGames.Portfolio3D.UI
 
         private async void OnStationEntered(StationEntered stationEntered)
         {
+            Debug.Log($"Station entered, loading icon: {stationEntered.ProjectData.Icon} and SFX: {stationEntered.ProjectData.SFX}");
             // Cancel any ongoing text animation.
             textAnimationCts?.Cancel();
             textAnimationCts = new CancellationTokenSource();
@@ -88,7 +89,7 @@ namespace SparkGames.Portfolio3D.UI
             // Load and cache the icon sprite
             if (!spriteCache.TryGetValue(stationInfo.Icon, out var iconSprite))
             {
-                iconSprite = Resources.Load<Sprite>(stationInfo.Icon);
+                iconSprite = Resources.Load<Sprite>("Icons/" + stationInfo.Icon);
                 if (iconSprite != null)
                 {
                     spriteCache[stationInfo.Icon] = iconSprite;
@@ -99,7 +100,7 @@ namespace SparkGames.Portfolio3D.UI
             // Load and cache the audio clip
             if (!audioClipCache.TryGetValue(stationInfo.SFX, out var audioClip))
             {
-                audioClip = Resources.Load<AudioClip>(stationInfo.SFX);
+                audioClip = Resources.Load<AudioClip>("SFX/" + stationInfo.SFX);
                 if (audioClip != null)
                 {
                     audioClipCache[stationInfo.SFX] = audioClip;
