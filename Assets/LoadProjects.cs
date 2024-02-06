@@ -7,10 +7,10 @@ namespace SparkGames.Portfolio3D
     public class LoadProjects : InjectableMonoBehaviour
     {
         [Inject] private readonly ICVLoader cvLoader;
-        private void Start()
+        private async void Start()
         {
-
-            foreach (var project in cvLoader.CVData.Projects)
+            var cvData = await  cvLoader.DataLoaded;
+            foreach (var project in cvData.Projects)
             {
                 LoadProjectEntry(project);
             }

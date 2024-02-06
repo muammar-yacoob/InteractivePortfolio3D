@@ -1,65 +1,65 @@
-﻿using System;
-using System.IO;
-using Cysharp.Threading.Tasks;
-using SparkCore.Runtime.Injection;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
+using System.IO;
+using SparkCore.Runtime.Injection;
 
 namespace SparkGames.Portfolio3D
 {
-    public interface ICVLoader
-    {
-        CVDataModel CVData { get; }
-    }
-
-    [ServiceProvider]
+    [DefaultExecutionOrder(-500)]
+    [ServiceProvider(ServiceLifetime.Singleton)]
     public class CVLoader : ICVLoader, IDisposable
     {
         private readonly string jsonFileName = "CV.json";
         private CVDataModel _cvData;
         public CVDataModel CVData => _cvData;
 
+        private UniTaskCompletionSource<CVDataModel> _dataLoadedCompletionSource = new UniTaskCompletionSource<CVDataModel>();
+        public UniTask<CVDataModel> DataLoaded => _dataLoadedCompletionSource.Task;
+
         public CVLoader()
         {
-            // Start an asynchronous operation to load the JSON data
-            LoadJsonData().Forget(); // Using UniTask's Forget extension method to fire and forget
+            LoadJsonData().Forget();
         }
 
-        private async UniTask LoadJsonData()
+        private async UniTaskVoid LoadJsonData()
         {
-            string filePath = Path.Combine(Application.streamingAssetsPath, jsonFileName);
+            string filePath;
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
-                // Use UnityWebRequest for WebGL
+                filePath = Path.Combine(Application.streamingAssetsPath, jsonFileName);
                 UnityWebRequest request = UnityWebRequest.Get(filePath);
                 await request.SendWebRequest();
 
-                if (request.result != UnityWebRequest.Result.Success)
+                if (request.result == UnityWebRequest.Result.Success)
                 {
-                    Debug.LogError("Error loading JSON: " + request.error);
+                    _cvData = JsonUtility.FromJson<CVDataModel>(request.downloadHandler.text);
+                    _dataLoadedCompletionSource.TrySetResult(_cvData);
+                    Debug.Log($"CV data loaded from {filePath}. Total projects: {_cvData.Projects.Count}");
                 }
                 else
                 {
-                    // Successfully loaded the JSON file
-                    string jsonData = request.downloadHandler.text;
-                    _cvData = JsonUtility.FromJson<CVDataModel>(jsonData);
+                    Debug.LogError($"Error loading JSON: {request.error}");
+                    _dataLoadedCompletionSource.TrySetException(new Exception($"Error loading JSON: {request.error}"));
                 }
             }
             else
             {
-                // Directly read the file content for non-WebGL platforms
+                filePath = Path.Combine(Application.streamingAssetsPath, jsonFileName);
                 if (File.Exists(filePath))
                 {
-                    string jsonData = await File.ReadAllTextAsync(filePath);
+                    string jsonData = await System.IO.File.ReadAllTextAsync(filePath);
                     _cvData = JsonUtility.FromJson<CVDataModel>(jsonData);
+                    _dataLoadedCompletionSource.TrySetResult(_cvData);
+                    Debug.Log($"CV data loaded from {filePath}. Total projects: {_cvData.Projects.Count}");
                 }
                 else
                 {
-                    Debug.LogError("Cannot find JSON file at " + filePath);
+                    Debug.LogError($"Cannot find JSON file at {filePath}");
+                    _dataLoadedCompletionSource.TrySetException(new Exception($"Cannot find JSON file at {filePath}"));
                 }
             }
-
-            if (_cvData == null) Debug.LogError("CVDataModel is null");
         }
 
         public void Dispose()

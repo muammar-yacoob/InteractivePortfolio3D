@@ -10,10 +10,11 @@ namespace SparkGames.Portfolio3D
         [SerializeField] private Transform namePoint;
         [SerializeField] private Transform titlePoint;
         [Inject] private readonly ICVLoader cvLoader;
-        private void Start()
+        private async void Start()
         {
-            Generate3DText(cvLoader.CVData.Name, namePoint);
-            Generate3DText(cvLoader.CVData.JobTitle, titlePoint);
+            var cvData = await  cvLoader.DataLoaded;
+            Generate3DText(cvData.Name, namePoint);
+            Generate3DText(cvData.JobTitle, titlePoint);
         }
 
         void Generate3DText(string text, Transform startPoint)
