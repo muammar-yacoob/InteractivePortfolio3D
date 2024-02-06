@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -32,6 +33,10 @@ namespace SparkGames.Portfolio3D.UI
         private TypingSfx typingSfx;
         private RectTransform dialogueBox;
         private CanvasGroup canvasGroup;
+        
+        private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
+        private Dictionary<string, AudioClip> audioClipCache = new Dictionary<string, AudioClip>();
+
 
         protected override void Awake()
         {
@@ -76,15 +81,36 @@ namespace SparkGames.Portfolio3D.UI
             var stationInfo = stationEntered.ProjectData;
 
             if (token.IsCancellationRequested || textUI == null) return;
-            
+    
             titleUI.text = stationInfo.Title;
             backgroundMat.color = initialColor;
-            iconUI.sprite = Resources.Load<Sprite>(stationInfo.Icon);
-            
-            if(audioSource != null && Resources.Load<AudioClip>(stationInfo.SFX) != null)
+
+            // Load and cache the icon sprite
+            if (!spriteCache.TryGetValue(stationInfo.Icon, out var iconSprite))
             {
-                audioSource.PlayOneShot(Resources.Load<AudioClip>(stationInfo.SFX));
+                iconSprite = Resources.Load<Sprite>(stationInfo.Icon);
+                if (iconSprite != null)
+                {
+                    spriteCache[stationInfo.Icon] = iconSprite;
+                }
             }
+            iconUI.sprite = iconSprite;
+    
+            // Load and cache the audio clip
+            if (!audioClipCache.TryGetValue(stationInfo.SFX, out var audioClip))
+            {
+                audioClip = Resources.Load<AudioClip>(stationInfo.SFX);
+                if (audioClip != null)
+                {
+                    audioClipCache[stationInfo.SFX] = audioClip;
+                }
+            }
+
+            if(audioSource != null && audioClip != null)
+            {
+                audioSource.PlayOneShot(audioClip);
+            }
+
             
             // Set initial states
             canvasGroup.alpha = 0;
