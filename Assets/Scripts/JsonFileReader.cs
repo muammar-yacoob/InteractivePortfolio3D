@@ -5,12 +5,12 @@ namespace SparkGames.Portfolio3D
 {
     public class JsonFileReader
     {
-        public static TextDataModel LoadTextDataFromJson(string filePath)
+        public static CVDataModel LoadTextDataFromJson(string filePath)
         {
             if (File.Exists(filePath))
             {
                 string dataAsJson = File.ReadAllText(filePath);
-                return JsonUtility.FromJson<TextDataModel>(dataAsJson);
+                return JsonUtility.FromJson<CVDataModel>(dataAsJson);
             }
             else
             {

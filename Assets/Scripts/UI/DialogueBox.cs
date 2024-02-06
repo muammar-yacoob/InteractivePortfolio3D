@@ -73,17 +73,17 @@ namespace SparkGames.Portfolio3D.UI
             textAnimationCts = new CancellationTokenSource();
 
             var token = stationEntered.Token;
-            var stationInfo = stationEntered.StationInfo;
+            var stationInfo = stationEntered.ProjectData;
 
             if (token.IsCancellationRequested || textUI == null) return;
             
             titleUI.text = stationInfo.Title;
             backgroundMat.color = initialColor;
-            iconUI.sprite = stationInfo.Icon;
+            iconUI.sprite = Resources.Load<Sprite>(stationInfo.Icon);
             
-            if(audioSource != null && stationInfo.EntrySfx != null)
+            if(audioSource != null && Resources.Load<AudioClip>(stationInfo.SFX) != null)
             {
-                audioSource.PlayOneShot(stationInfo.EntrySfx);
+                audioSource.PlayOneShot(Resources.Load<AudioClip>(stationInfo.SFX));
             }
             
             // Set initial states
@@ -97,8 +97,8 @@ namespace SparkGames.Portfolio3D.UI
             // Start text animation with new CancellationToken.
             try
             {
-                var doTextTask = textUI.DOText(stationInfo.Dialogue, durationPerChar, true, textAnimationCts.Token);
-                var doBeepTask = typingSfx.DOBeep(stationInfo.Dialogue.Length, durationPerChar, textAnimationCts);
+                var doTextTask = textUI.DOText(stationInfo.Description, durationPerChar, true, textAnimationCts.Token);
+                var doBeepTask = typingSfx.DOBeep(stationInfo.Description.Length, durationPerChar, textAnimationCts);
                 await UniTask.WhenAll(doTextTask, doBeepTask);
             }
             catch (OperationCanceledException)

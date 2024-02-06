@@ -1,25 +1,16 @@
-using System.IO;
-using Cysharp.Threading.Tasks;
+using SparkCore.Runtime.Core;
+using SparkCore.Runtime.Injection;
 using UnityEngine;
 
 namespace SparkGames.Portfolio3D
 {
-    public class LoadProjects : MonoBehaviour
+    public class LoadProjects : InjectableMonoBehaviour
     {
-        [SerializeField] private string jsonFileName = "CV.json";
-
-        private async UniTaskVoid Start()
+        [Inject] private readonly ICVLoader cvLoader;
+        private void Start()
         {
-            string filePath = Path.Combine(Application.streamingAssetsPath, jsonFileName);
-            TextDataModel textData = JsonFileReader.LoadTextDataFromJson(filePath);
 
-            if (textData == null)
-            {
-                Debug.LogError("TextDataModel is null");
-                return;
-            }
-
-            foreach (var project in textData.Projects)
+            foreach (var project in cvLoader.CVData.Projects)
             {
                 LoadProjectEntry(project);
             }

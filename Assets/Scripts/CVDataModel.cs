@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SparkGames.Portfolio3D
 {
     [Serializable]
-    public class TextDataModel
+    public class CVDataModel
     {
         public string Name;
         public string JobTitle;
