@@ -4,15 +4,40 @@
     <meta charset="utf-8">
     <title>Unity WebGL Player | Interactive Portfolio 3D</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
     <style>
         body { background-color: black; margin: 0; }
-        #unity-container { width: 960px; height: 600px; margin: auto; }
-        canvas { width: 100%; height: 100%; }
+        #unity-container { 
+            position: relative;
+            width: 100%; /* Make the game container responsive */
+            max-width: 960px; /* Maximum width */
+            height: 0; /* Reset height */
+            padding-bottom: 56.25%; /* Aspect ratio */
+            margin: auto;
+        }
+        #unity-canvas { 
+            width: 100%; 
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        /* Fullscreen button styles */
+        #unity-fullscreen-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+            padding: 5px;
+            background: #fff;
+            border: none;
+            cursor: pointer;
+        }
     </style>
+    
 </head>
 <body>
     <div id="unity-container">
+        <button id="unity-fullscreen-button">Fullscreen</button>
         <canvas id="unity-canvas"></canvas>
         <div id="unity-loading-bar">
             <div id="unity-progress-bar-empty">
@@ -46,6 +71,22 @@
         };
 
         document.body.appendChild(script);
+    </script>
+
+    <script>
+        script.onload = () => {
+    createUnityInstance(document.querySelector("#unity-canvas"), config, (progress) => {
+        document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
+    }).then((unityInstance) => {
+        document.querySelector("#unity-loading-bar").style.display = "none";
+        document.getElementById("unity-fullscreen-button").addEventListener('click', function() {
+            unityInstance.SetFullscreen(1);
+        });
+    }).catch((message) => {
+        alert(message);
+    });
+};
+
     </script>
 </body>
 </html>
