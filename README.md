@@ -2,7 +2,7 @@
 
 # Interactive 3D Portfolio
 
-Designed for Game Developers and 3D Artists, this project enables showcasing skills in a dynamic 3D environment. Easily embedded into personal websites, it requires only modifications to the `CV.json` file for customization, dynamically rendering your professional details in 3D.
+<p>Designed for Game Developers and 3D Artists, this project enables showcasing skills in a dynamic 3D environment. Easily embedded into personal websites, it requires only modifications to the `CV.json` file for customization, dynamically rendering your professional details in 3D. <a href="https://muammar-yacoob.github.io/InteractivePortfolio3D/"> Here's a sample</a> without your customizations.</p>
 
 ## Setup
 
@@ -32,11 +32,11 @@ Publish with GitHub Pages: In your forked repository's settings, navigate to "Pa
 ```
 Replace the src with your GitHub Pages URL. Adjust width and height as needed.
 
-### Contribution
+## Contribution
 Contributions are welcome! Fork, modify, and submit a pull request.
 A star ⭐ to the repo is much appreciated.
 
-### Credits
+## Credits
 Artwork
 - Morty: https://skfb.ly/ownJQ
 - Whiteboard: https://skfb.ly/orOsB
