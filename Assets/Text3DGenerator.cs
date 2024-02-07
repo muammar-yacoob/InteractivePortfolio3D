@@ -12,7 +12,8 @@ namespace SparkGames.Portfolio3D
         [Inject] private readonly ICVLoader cvLoader;
         private async void Start()
         {
-            var cvData = await  cvLoader.DataLoaded;
+            UniTask.Delay(2000);
+            var cvData = await  cvLoader.GetCVDataAsync();
             Generate3DText(cvData.Name, namePoint);
             Generate3DText(cvData.JobTitle, titlePoint);
         }

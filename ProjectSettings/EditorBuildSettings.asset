@@ -7,5 +7,5 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Ricks Basement.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: 40bebb7139381e046a8e0e6b3498f8d2
   m_configObjects: {}
