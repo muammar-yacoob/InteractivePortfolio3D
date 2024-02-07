@@ -1,0 +1,23 @@
+{
+  "Name": "Muammar Yacoob",
+  "JobTitle": "Software Engineer",
+  "WorkExperience": "Work Experience\nAugust 2022 – Present: \tSandwitch Games \tLondon, UK\n[Senior Software Engineer]\n▪ Contributed to the company’s development framework and templates.\n▪ Built various VR applications including multiplayer projects.\n\n2021 – July 2022: \tBlue Muffin Games\tManchester, UK\n[Junior Game Developer]\n▪ Set up and managed the backend Server for 6 mini-games.\n▪ Developed the Metaverse avatars experience.\n▪ Participated in other projects mainly Networking VR & AR.\n\nEducation: BSc in Computer Science\nSkills: Unity3D, Blender & C#",
+  "Education": "BSc in Computer Science",
+  "Skills": "Unity3D, Blender & C#",
+  "Projects": [
+    {
+      "Title": "Space Trace",
+      "Description": "A multiplayer VR game inspired by Among Us.",
+      "Icon": "game",
+      "SFX": "project_entry",
+      "URL": "https://spark-games.co.uk/"
+    },
+    {
+      "Title": "3D Modelling",
+      "Description": "An online portfolio of 3D models created using Blender.",
+      "Icon": "art",
+      "SFX": "project_entry",
+      "URL": "https://sketchfab.com/muammar.yacoob/models"
+    }
+  ]
+}
