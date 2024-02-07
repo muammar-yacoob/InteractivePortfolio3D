@@ -10,7 +10,7 @@
 - Use the 'Fork' button on GitHub to create your copy for customization and updates.
 
 ### Customize Your CV
-- Edit the `CV.json` in `Assets/StreamingAssets` with your details. Example format:
+- Checkout the `gh-pages` branch and edit the `CV.json` with your details. Example format:
   ```json
   {
     "Name": "Your Name",
@@ -25,7 +25,8 @@
   }
   ```
 ### Setup GitHub Pages
-Publish with GitHub Pages: In your forked repository's settings, navigate to "Pages" and select your main branch as the source. GitHub will provide a URL to access your project online.
+Publish with GitHub Pages: In your forked repository's settings, navigate to "Pages" and select your the `gh-pages` branch as the source. GitHub will provide a URL to access your project online.
+
 ### Embed in Your Website:
 ```html
 <iframe src="https://yourusername.github.io/your-repository-name/" width="960" height="540" allowfullscreen="allowfullscreen"></iframe>
