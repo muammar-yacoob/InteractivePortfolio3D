@@ -2,7 +2,7 @@
 
 # Interactive 3D Portfolio
 
-<p>Designed for Game Developers and 3D Artists, this project enables showcasing skills in a dynamic 3D environment. Easily embedded into personal websites, it requires only modifications to the `CV.json` file for customization, dynamically rendering your professional details in 3D. <a href="https://muammar-yacoob.github.io/InteractivePortfolio3D/"> Here's a sample</a> without your customizations.</p>
+<p>Designed for Game Developers and 3D Artists, this project enables showcasing skills in a dynamic 3D environment. Easily embedded into personal websites, it requires only modifications to the `CV.json` file for customization, dynamically rendering your professional details in 3D. <a href="https://spark-games.co.uk/#about"> Here's a sample</a> without your customizations.</p>
 
 ## Setup
 
