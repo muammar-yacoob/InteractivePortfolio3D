@@ -4417,6 +4417,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.89
       objectReference: {fileID: 0}
+    - target: {fileID: 5599370941663904229, guid: 878e7019a55b1a149926bf2c39730d12, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599370941663904229, guid: 878e7019a55b1a149926bf2c39730d12, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.67
+      objectReference: {fileID: 0}
     - target: {fileID: 6468560362159725541, guid: 878e7019a55b1a149926bf2c39730d12, type: 3}
       propertyPath: m_Name
       value: RicksGarage
