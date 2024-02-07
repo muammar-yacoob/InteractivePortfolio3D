@@ -1,4 +1,5 @@
-﻿using SparkCore.Runtime.Core;
+﻿using Cysharp.Threading.Tasks;
+using SparkCore.Runtime.Core;
 using SparkCore.Runtime.Injection;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,11 @@ namespace SparkGames.Portfolio3D.UI
     {
         [SerializeField] TMP_Text workExperienceUI;
         [Inject] private readonly ICVLoader cvLoader;
-        private void Start() => workExperienceUI.text = cvLoader.CVData.WorkExperience;
+        private async void Start()
+        {
+            UniTask.Delay(1000);
+            var cvData = await  cvLoader.GetCVDataAsync();
+            workExperienceUI.text = cvData.WorkExperience;
+        }
     }
 }

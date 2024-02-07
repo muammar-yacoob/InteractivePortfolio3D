@@ -3,6 +3,8 @@ using SparkCore.Runtime.Injection;
 using SparkGames.Portfolio3D.Player;
 using UnityEngine;
 using System.Linq;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace SparkGames.Portfolio3D.Stations
 {
@@ -17,13 +19,15 @@ namespace SparkGames.Portfolio3D.Stations
         protected override void Awake()
         {
             base.Awake();
-            projectData = GetProjectByTitle(projectTitle);
+            GetProjectByTitle().Forget();
             GetComponent<BoxCollider>().isTrigger = true;
         }
 
-        private Project GetProjectByTitle(string title)
+        private async UniTask GetProjectByTitle()
         {
-            return cvLoader.CVData.Projects.FirstOrDefault(project => project.Title == title);
+            var cvData = await  cvLoader.GetCVDataAsync();
+            var projects = cvData.Projects;
+            projectData = projects.FirstOrDefault(project => project.Title == projectTitle);
         }
 
         

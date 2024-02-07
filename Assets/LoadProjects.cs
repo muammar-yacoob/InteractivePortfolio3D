@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using SparkCore.Runtime.Core;
 using SparkCore.Runtime.Injection;
 using UnityEngine;
@@ -7,10 +8,11 @@ namespace SparkGames.Portfolio3D
     public class LoadProjects : InjectableMonoBehaviour
     {
         [Inject] private readonly ICVLoader cvLoader;
-        private void Start()
+        private async void Start()
         {
-
-            foreach (var project in cvLoader.CVData.Projects)
+            UniTask.Delay(1500);
+            var cvData = await  cvLoader.GetCVDataAsync();
+            foreach (var project in cvData.Projects)
             {
                 LoadProjectEntry(project);
             }
