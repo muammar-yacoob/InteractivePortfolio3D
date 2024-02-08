@@ -1,4 +1,5 @@
-![main](./res/imgs/main.png)
+[![Setup](./res/imgs/main.png)](https://youtu.be/KpQsvGS_6rw?si=MZVMS8JDnOEy-2Fs)
+
 
 # Interactive 3D Portfolio
 
@@ -36,6 +37,8 @@ Replace the src with your GitHub Pages URL. Adjust width and height as needed.
 ## Contribution
 Contributions are welcome! Fork, modify, and submit a pull request.
 A star ⭐ to the repo is much appreciated.
+
+Here's a [video tutorial](https://youtu.be/KpQsvGS_6rw?si=MZVMS8JDnOEy-2Fs)
 
 ## Credits
 Artwork
