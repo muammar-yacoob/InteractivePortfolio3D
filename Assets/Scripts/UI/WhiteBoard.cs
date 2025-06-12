@@ -12,8 +12,7 @@ namespace SparkGames.Portfolio3D.UI
         [Inject] private readonly ICVLoader cvLoader;
         private async void Start()
         {
-            UniTask.Delay(1000);
-            var cvData = await  cvLoader.GetCVDataAsync();
+            var cvData = await cvLoader.GetCVDataAsync();
             workExperienceUI.text = cvData.WorkExperience;
         }
     }
