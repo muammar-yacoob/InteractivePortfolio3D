@@ -39,10 +39,3 @@ Contributions are welcome! Fork, modify, and submit a pull request.
 A star ⭐ to the repo is much appreciated!
 
 Here's a [video tutorial](https://youtu.be/KpQsvGS_6rw?si=MZVMS8JDnOEy-2Fs)
-
-## Credits
-Artwork
-- Morty: https://skfb.ly/ownJQ
-- Whiteboard: https://skfb.ly/orOsB
-- Tape: https://skfb.ly/6YWop
-- Icons: https://www.flaticon.com/
